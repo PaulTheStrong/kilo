@@ -1,4 +1,4 @@
-//step 164
+//step 165
 
 /*** includes ***/
 
@@ -44,6 +44,7 @@ enum editorKey {
 
 enum editorHighlight{
 	HL_NORMAL = 0,
+	HL_STRING,
 	HL_NUMBER,
 	HL_MATCH
 };
@@ -252,6 +253,7 @@ void editorUpdateSyntax(erow *row){
 
 int editorSyntaxToColor(int hl){
 	switch (hl){
+		case HL_STRING: return 35;
 		case HL_NUMBER: return 31;
 		case HL_MATCH: return 34;
 		default: return 37;
@@ -405,7 +407,7 @@ void editorInsertChar(int c){
 }
 
 void editorDelChar(){
-	if(E.cy == E.numrows) return;
+	if(E.cy == E.numrows || (E.cx == 0 && E.cy == 0)) return;
 
 	erow *row = &E.row[E.cy];
 	if(E.cx > 0){
@@ -919,7 +921,7 @@ int main(int argc, char **argv){
 
 	editorSetStatusMessage("HELP: Ctrl-Q = quit | Ctrl-S = save | CTRL-F = find");
 	
-	while(1) {
+	while(2*2!=5) {
 		editorRefreshScreen();
 		editorProcessKeypress();
 	}
